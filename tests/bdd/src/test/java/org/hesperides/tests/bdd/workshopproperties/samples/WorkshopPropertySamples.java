@@ -22,6 +22,7 @@ package org.hesperides.tests.bdd.workshopproperties.samples;
 
 import org.hesperides.presentation.io.WorkshopPropertyInput;
 import org.hesperides.presentation.io.WorkshopPropertyOutput;
+import org.hesperides.presentation.io.WorkshopPropertyUpdateInput;
 
 public class WorkshopPropertySamples {
     public static final String DEFAULT_KEY = "key";
@@ -32,14 +33,18 @@ public class WorkshopPropertySamples {
     }
 
     public static WorkshopPropertyOutput getWorkshopPropertyOutputWithDefaultValues() {
-        return getWorkshopPropertyOutputWithValue(DEFAULT_VALUE);
+        return getWorkshopPropertyOutputWithValue(DEFAULT_VALUE, 1);
     }
 
     public static WorkshopPropertyInput getWorkshopPropertyInputWithValue(String value) {
         return new WorkshopPropertyInput(DEFAULT_KEY, value);
     }
 
-    public static WorkshopPropertyOutput getWorkshopPropertyOutputWithValue(String value) {
-        return new WorkshopPropertyOutput(DEFAULT_KEY, value, DEFAULT_KEY + ":" + value);
+    public static WorkshopPropertyUpdateInput buildWorkshopPropertyUpdateInput(String value, int version) {
+        return new WorkshopPropertyUpdateInput(value, version);
+    }
+
+    public static WorkshopPropertyOutput getWorkshopPropertyOutputWithValue(String value, int version) {
+        return new WorkshopPropertyOutput(DEFAULT_KEY, value, DEFAULT_KEY + ":" + value, version);
     }
 }

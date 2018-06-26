@@ -17,6 +17,6 @@ public class WorkshopPropertyInput {
     String value;
 
     public WorkshopProperty toDomainInstance() {
-        return new WorkshopProperty(key, value, null);
+        return new WorkshopProperty(key, value, null, 0);
     }
 }

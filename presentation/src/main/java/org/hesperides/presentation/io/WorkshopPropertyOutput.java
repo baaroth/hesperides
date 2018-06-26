@@ -10,12 +10,15 @@ public class WorkshopPropertyOutput {
     String value;
     @SerializedName("key_value")
     String keyValue;
+    @SerializedName("v")
+    int version;
 
-    public static WorkshopPropertyOutput fromWorkshopPropertyView(WorkshopPropertyView workshopPropertyView) {
+    public static WorkshopPropertyOutput fromWorkshopPropertyView(WorkshopPropertyView view) {
         return new WorkshopPropertyOutput(
-                workshopPropertyView.getKey(),
-                workshopPropertyView.getValue(),
-                workshopPropertyView.getKeyValue()
+                view.getKey(),
+                view.getValue(),
+                view.getKeyValue(),
+                view.getVersion()
         );
     }
 }

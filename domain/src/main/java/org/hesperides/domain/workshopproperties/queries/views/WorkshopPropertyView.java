@@ -7,4 +7,5 @@ public class WorkshopPropertyView {
     String key;
     String value;
     String keyValue;
+    int version;
 }

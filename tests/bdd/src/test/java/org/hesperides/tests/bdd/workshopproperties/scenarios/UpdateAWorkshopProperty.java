@@ -1,8 +1,8 @@
 package org.hesperides.tests.bdd.workshopproperties.scenarios;
 
 import cucumber.api.java8.En;
-import org.hesperides.presentation.io.WorkshopPropertyInput;
 import org.hesperides.presentation.io.WorkshopPropertyOutput;
+import org.hesperides.presentation.io.WorkshopPropertyUpdateInput;
 import org.hesperides.tests.bdd.CucumberSpringBean;
 import org.hesperides.tests.bdd.workshopproperties.WorkshopPropertyAssertions;
 import org.hesperides.tests.bdd.workshopproperties.contexts.WorkshopPropertyContext;
@@ -23,14 +23,14 @@ public class UpdateAWorkshopProperty extends CucumberSpringBean implements En {
     public UpdateAWorkshopProperty() {
 
         When("^updating this workshop property$", () -> {
-            WorkshopPropertyInput workshopPropertyInput = WorkshopPropertySamples.getWorkshopPropertyInputWithValue("foo");
-            response = workshopPropertyContext.updateWorkshopProperty(workshopPropertyInput);
+            WorkshopPropertyUpdateInput input = WorkshopPropertySamples.buildWorkshopPropertyUpdateInput("foo", 1);
+            response = workshopPropertyContext.updateWorkshopProperty(input);
         });
 
         Then("^the workshop property is successfully updated", () -> {
             assertEquals(HttpStatus.OK, response.getStatusCode());
             WorkshopPropertyOutput actualOutput = response.getBody();
-            WorkshopPropertyOutput expectedOutput = WorkshopPropertySamples.getWorkshopPropertyOutputWithValue("foo");
+            WorkshopPropertyOutput expectedOutput = WorkshopPropertySamples.getWorkshopPropertyOutputWithValue("foo", 2);
             WorkshopPropertyAssertions.assertWorkshopProperty(expectedOutput, actualOutput);
         });
     }

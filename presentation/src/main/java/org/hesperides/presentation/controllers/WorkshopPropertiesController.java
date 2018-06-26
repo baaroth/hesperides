@@ -6,6 +6,7 @@ import org.hesperides.domain.workshopproperties.entities.WorkshopProperty;
 import org.hesperides.domain.workshopproperties.queries.views.WorkshopPropertyView;
 import org.hesperides.presentation.io.WorkshopPropertyInput;
 import org.hesperides.presentation.io.WorkshopPropertyOutput;
+import org.hesperides.presentation.io.WorkshopPropertyUpdateInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -41,10 +42,15 @@ public class WorkshopPropertiesController extends AbstractController {
         return ResponseEntity.ok(output);
     }
 
-    @PutMapping
+    @PutMapping("/{k}")
     public ResponseEntity<WorkshopPropertyOutput> updateWorkshopProperty(Authentication authentication,
-                                                                         @Valid @RequestBody final WorkshopPropertyInput workshopPropertyInput) {
+                                                                         @PathVariable("k") final String k,
+                                                                         @Valid @RequestBody final WorkshopPropertyUpdateInput input) {
 
-        throw new UnsupportedOperationException("Not implemented");
+        User currentUser = User.fromAuthentication(authentication);
+        WorkshopProperty prop = input.toDomainInstance(k);
+        cases.updateWorkshopProperty(prop, currentUser);
+
+        return getWorkshopProperty(k);
     }
 }

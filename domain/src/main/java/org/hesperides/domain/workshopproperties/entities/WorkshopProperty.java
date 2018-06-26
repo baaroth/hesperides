@@ -7,4 +7,5 @@ public class WorkshopProperty {
     String key;
     String value;
     String keyValue;
+    int version;
 }

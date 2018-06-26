@@ -34,7 +34,7 @@ public class WorkshopPropertyUseCases {
                 .orElseThrow(() -> new WorkshopPropertyNotFoundException(k));
     }
 
-    public void updateWorkshopProperty(WorkshopProperty workshopProperty, User user) {
-        throw new UnsupportedOperationException("Not implemented");
+    public void updateWorkshopProperty(WorkshopProperty input, User user) {
+        commands.updateWorkshopProperty(input, user);
     }
 }

@@ -34,18 +34,21 @@ public class WorkshopPropertyDocument {
     private String key;
     private String value;
     private String keyValue;
+    private int version;
 
-    public static WorkshopPropertyDocument fromDomainInstance(WorkshopProperty workshopProperty) {
-        WorkshopPropertyDocument workshopPropertyDocument = new WorkshopPropertyDocument();
-        workshopPropertyDocument.setKey(workshopProperty.getKey());
-        workshopPropertyDocument.setValue(workshopProperty.getValue());
-        workshopPropertyDocument.setKeyValue(workshopProperty.getKeyValue());
-        return workshopPropertyDocument;
+    public static WorkshopPropertyDocument fromDomainInstance(WorkshopProperty domain) {
+        WorkshopPropertyDocument doc = new WorkshopPropertyDocument();
+        doc.setKey(domain.getKey());
+        doc.setValue(domain.getValue());
+        doc.setKeyValue(domain.getKeyValue());
+        doc.setVersion(domain.getVersion());
+
+        return doc;
     }
 
     public WorkshopPropertyView toWorkshopPropertyView() {
         return new WorkshopPropertyView(
-                key, value, keyValue
+                key, value, keyValue, version
         );
     }
 }

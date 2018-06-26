@@ -23,6 +23,7 @@ package org.hesperides.tests.bdd.workshopproperties.contexts;
 import cucumber.api.java8.En;
 import org.hesperides.presentation.io.WorkshopPropertyInput;
 import org.hesperides.presentation.io.WorkshopPropertyOutput;
+import org.hesperides.presentation.io.WorkshopPropertyUpdateInput;
 import org.hesperides.tests.bdd.CucumberSpringBean;
 import org.hesperides.tests.bdd.workshopproperties.samples.WorkshopPropertySamples;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +51,8 @@ public class WorkshopPropertyContext extends CucumberSpringBean implements En {
         return response;
     }
 
-    public ResponseEntity<WorkshopPropertyOutput> updateWorkshopProperty(WorkshopPropertyInput workshopPropertyInput) {
-        return rest.putForEntity("/workshop/properties", workshopPropertyInput, WorkshopPropertyOutput.class);
+    public ResponseEntity<WorkshopPropertyOutput> updateWorkshopProperty(WorkshopPropertyUpdateInput input) {
+        return rest.putForEntity("/workshop/properties/{key}", input, WorkshopPropertyOutput.class, key);
     }
 
     public ResponseEntity<WorkshopPropertyOutput> retrieveExistingWorkshopProperty() {
