@@ -3,6 +3,8 @@ package org.hesperides.application.workshopproperties;
 import org.hesperides.domain.security.User;
 import org.hesperides.domain.workshopproperties.commands.WorkshopPropertyCommands;
 import org.hesperides.domain.workshopproperties.entities.WorkshopProperty;
+import org.hesperides.domain.workshopproperties.exceptions.DuplicateWorkshopPropertyException;
+import org.hesperides.domain.workshopproperties.exceptions.WorkshopPropertyNotFoundException;
 import org.hesperides.domain.workshopproperties.queries.WorkshopPropertyQueries;
 import org.hesperides.domain.workshopproperties.queries.views.WorkshopPropertyView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,16 @@ public class WorkshopPropertyUseCases {
         this.queries = queries;
     }
 
-    public String createWorkshopProperty(WorkshopProperty workshopProperty, User user) {
-        throw new UnsupportedOperationException("Not implemented");
+    public String createWorkshopProperty(WorkshopProperty input, User user) {
+        if (queries.workshopPropertyExists(input.getKey())) {
+            throw new DuplicateWorkshopPropertyException(input.getKey());
+        }
+        return commands.createProperty(input, user);
     }
 
-    public WorkshopPropertyView getWorkshopProperty(String workshopPropertyKey) {
-        throw new UnsupportedOperationException("Not implemented");
+    public WorkshopPropertyView getWorkshopProperty(String k) {
+        return queries.fetchProperty(k)
+                .orElseThrow(() -> new WorkshopPropertyNotFoundException(k));
     }
 
     public void updateWorkshopProperty(WorkshopProperty workshopProperty, User user) {

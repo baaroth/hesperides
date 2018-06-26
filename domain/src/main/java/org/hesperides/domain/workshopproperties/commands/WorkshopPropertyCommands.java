@@ -21,6 +21,7 @@
 package org.hesperides.domain.workshopproperties.commands;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.hesperides.domain.CreateWorkshopPropertyCommand;
 import org.hesperides.domain.security.User;
 import org.hesperides.domain.workshopproperties.entities.WorkshopProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class WorkshopPropertyCommands {
         this.commandGateway = commandGateway;
     }
 
-    public String createWorkshopProperty(WorkshopProperty workshopProperty, User user) {
-        throw new UnsupportedOperationException("Not implemented");
+    public String createProperty(WorkshopProperty definition, User user) {
+        return commandGateway.sendAndWait(new CreateWorkshopPropertyCommand(definition, user));
     }
 
     public void updateWorkshopProperty(WorkshopProperty workshopProperty, User user) {

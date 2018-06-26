@@ -28,11 +28,11 @@ public class WorkshopPropertySamples {
     public static final String DEFAULT_VALUE = "value";
 
     public static WorkshopPropertyInput getWorkshopPropertyInputWithDefaultValues() {
-        return new WorkshopPropertyInput(DEFAULT_KEY, DEFAULT_VALUE);
+        return getWorkshopPropertyInputWithValue(DEFAULT_VALUE);
     }
 
     public static WorkshopPropertyOutput getWorkshopPropertyOutputWithDefaultValues() {
-        return new WorkshopPropertyOutput(DEFAULT_KEY, DEFAULT_VALUE, DEFAULT_KEY + DEFAULT_VALUE);
+        return getWorkshopPropertyOutputWithValue(DEFAULT_VALUE);
     }
 
     public static WorkshopPropertyInput getWorkshopPropertyInputWithValue(String value) {
@@ -40,6 +40,6 @@ public class WorkshopPropertySamples {
     }
 
     public static WorkshopPropertyOutput getWorkshopPropertyOutputWithValue(String value) {
-        return new WorkshopPropertyOutput(DEFAULT_KEY, value, DEFAULT_KEY + value);
+        return new WorkshopPropertyOutput(DEFAULT_KEY, value, DEFAULT_KEY + ":" + value);
     }
 }

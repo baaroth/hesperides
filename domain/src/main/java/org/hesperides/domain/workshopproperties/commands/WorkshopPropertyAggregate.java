@@ -22,10 +22,18 @@ package org.hesperides.domain.workshopproperties.commands;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
+import org.axonframework.commandhandling.model.AggregateLifecycle;
+import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.hesperides.domain.CreateWorkshopPropertyCommand;
+import org.hesperides.domain.WorkshopPropertyCreatedEvent;
+import org.hesperides.domain.workshopproperties.entities.WorkshopProperty;
 
 import java.io.Serializable;
+
+import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
 @Slf4j
 @Aggregate
@@ -34,4 +42,19 @@ public class WorkshopPropertyAggregate implements Serializable {
 
     @AggregateIdentifier
     private String key;
+
+    @CommandHandler
+    public WorkshopPropertyAggregate(CreateWorkshopPropertyCommand cmd) {
+        final WorkshopProperty initial = cmd.getDefinition();
+        final String k = initial.getKey(), v = initial.getValue();
+        final WorkshopProperty prop = new WorkshopProperty(k, v, String.format("%s:%s", k, v));
+
+        AggregateLifecycle.apply(new WorkshopPropertyCreatedEvent(prop, cmd.getUser()));
+    }
+
+    @EventSourcingHandler
+    public void on(WorkshopPropertyCreatedEvent event) {
+        this.key = event.getDefinition().getKey();
+        log.debug("workshop property created");
+    }
 }
